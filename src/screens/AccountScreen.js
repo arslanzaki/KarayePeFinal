@@ -145,13 +145,13 @@ const AccountScreen = ({ navigation }) => {
         </View>
       )}
 
-      <View className="border-b-2 border-[#432344]">
+      {/* <View className="border-b-2 border-[#432344]">
         <TouchableOpacity>
           <Text className="text-lg font-[NordecoRegular] px-4 py-4">
             Apply For Verification
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* {accountType.Buyer ? (
         
       ) : (

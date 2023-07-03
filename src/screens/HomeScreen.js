@@ -30,7 +30,6 @@ const HomeScreen = ({ navigation }) => {
   // const [picture, setPicture] = useState("");
   // const [username, setUsername] = useState("");
 
-  
   useEffect(() => {
     fetch(`${ApiLink}/ads`, {
       method: "GET",
@@ -92,6 +91,7 @@ const HomeScreen = ({ navigation }) => {
           </ScrollView>
 
           {/* TRENDING NOW */}
+          <Text className="text-3xl font-[NordecoBold] ml-4 my-2">Trending Now</Text>
 
           {/* LISTINGS */}
           <View className="flex flex-row flex-wrap">
@@ -106,6 +106,8 @@ const HomeScreen = ({ navigation }) => {
                     _id,
                     userId,
                     name,
+                    city,
+                    address,
                     location,
                     title,
                     description,
@@ -125,6 +127,8 @@ const HomeScreen = ({ navigation }) => {
                           _id,
                           userId,
                           name,
+                          city,
+                          address,
                           location,
                           title,
                           description,

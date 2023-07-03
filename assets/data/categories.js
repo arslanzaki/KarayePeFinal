@@ -46,9 +46,15 @@ const categories = [
   },
   {
     id: 8,
-    name: "Accessories",
+    name: "Habib",
+    iconName: Dress
+  },
+  {
+    id: 10,
+    name: "Arslan",
     iconName: Accessories
   },
+
   {
     id: 9,
     name: "Others",

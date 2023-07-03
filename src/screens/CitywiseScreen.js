@@ -1,29 +1,25 @@
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import mainIcons from "../../assets/data/mainIcons";
-import { ApiLink } from "../api/ApiLink";
+import { View, Text } from "react-native";
+import React from "react";
+import { useState } from "react";
+import { ScrollView } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
+import { KeyboardAvoidingView } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { TextInput } from "react-native";
+import { useEffect } from "react";
+import { TouchableOpacity } from "react-native";
+import { ApiLink } from "../api/ApiLink";
+import { Image } from "react-native";
 
-const CategorySearchScreen = ({ route, navigation }) => {
-  const { name } = route.params;
-  const [newSearchTerm, setSearchTerm] = useState(name.toLowerCase());
-
-  const [resultAds, setResultAds] = useState([]);
+const CitywiseScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
-  //console.log(searchTerm);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchCity, setSearchCity] = useState("");
+  const [resultAds, setResultAds] = useState([]);
 
   const getAds = () => {
     setLoading(true);
-    fetch(`${ApiLink}/ads/search/category?search=${newSearchTerm}`, {
+    fetch(`${ApiLink}/ads/search/city?search=${searchCity}`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -34,30 +30,25 @@ const CategorySearchScreen = ({ route, navigation }) => {
       .catch((err) => alert(err.message));
   };
 
-  useEffect(() => getAds(), []);
-  //console.log("search", resultAds);
+  useEffect(() => getAds(), [searchCity]);
+
   return (
     <>
-      <View className="bg-[#432344] py-10">
-        <View>
-          <Spinner
-            visible={loading}
-            textContent={"Searching..."}
-            textStyle={{ color: "#432344" }}
-            animation="fade"
-            overlayColor="#FFC03D"
-          />
-        </View>
-        <View className="flex flex-row-reverse items-center justify-end pr-4">
-          <Text className="font-[NordecoBold] text-3xl ml-4 text-[#FFC03D]">
-            {name}
+      <View>
+        <Spinner
+          visible={loading}
+          textContent={"Loading City Wise Ads..."}
+          textStyle={{ color: "#432344" }}
+          animation="fade"
+          overlayColor="#FFC03D"
+        />
+      </View>
+
+      <View className="bg-[#432344] pt-12 pb-8">
+        <View className="pr-4">
+          <Text className="font-[NordecoBold] text-center text-3xl ml-4 text-[#FFC03D]">
+            City Wise Search
           </Text>
-          <TouchableOpacity
-            className="h-10 w-10 rounded-full bg-[#FFC03D] flex items-center justify-center"
-            onPress={() => navigation.goBack()}
-          >
-            <Image source={mainIcons.backIcon} className="h-6 w-6" />
-          </TouchableOpacity>
         </View>
 
         <View>
@@ -67,11 +58,12 @@ const CategorySearchScreen = ({ route, navigation }) => {
               <KeyboardAvoidingView>
                 <TextInput
                   keyboardType="default"
+                  placeholder="Lahore"
                   onChangeText={(newText) => setSearchTerm(newText)}
-                  value={newSearchTerm}
-                  onEndEditing={() => getAds()}
+                  onSubmitEditing={() => {
+                    setSearchCity(searchTerm);
+                  }}
                   className="w-64"
-                  autoCapitalize="none"
                 />
               </KeyboardAvoidingView>
             </View>
@@ -90,8 +82,6 @@ const CategorySearchScreen = ({ route, navigation }) => {
                 userId,
                 name,
                 location,
-                city,
-                address,
                 title,
                 description,
                 adPicturePath,
@@ -110,8 +100,6 @@ const CategorySearchScreen = ({ route, navigation }) => {
                       userId,
                       name,
                       location,
-                      city,
-                      address,
                       title,
                       description,
                       adPicturePath,
@@ -149,4 +137,4 @@ const CategorySearchScreen = ({ route, navigation }) => {
   );
 };
 
-export default CategorySearchScreen;
+export default CitywiseScreen;

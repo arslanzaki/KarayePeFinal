@@ -11,7 +11,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import mainIcons from "../../assets/data/mainIcons";
-import { IndexPath, Layout, Select, SelectItem } from "@ui-kitten/components";
 import { useSelector } from "react-redux";
 import { ApiLink } from "../api/ApiLink";
 import { Switch } from "react-native-paper";
@@ -26,6 +25,7 @@ const AdCreationS1 = ({ navigation }) => {
   const titleInputRef = useRef();
   const [description, setDescription] = useState("");
   const descriptionInputRef = useRef();
+  const [location, setLocation] = useState({ latitude: 30, longitude: 30 });
 
   const userId = useSelector((state) => state.user._id);
 
@@ -52,6 +52,14 @@ const AdCreationS1 = ({ navigation }) => {
     setAddress(newText);
   });
 
+  const handleLocation = (value) => {
+    setLocation((prevState) => ({
+      ...prevState,
+      latitude: value?.coords?.latitude,
+      longitude: value?.coords?.longitude,
+    }));
+  };
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -61,7 +69,7 @@ const AdCreationS1 = ({ navigation }) => {
     });
     //console.log(result);
     if (!result.canceled) {
-      setAdPicturePath(result.assets[0].uri);
+      setAdPicturePath(result.assets[0].uri.toString("base64"));
     }
     // console.log(image);
   };
@@ -90,9 +98,8 @@ const AdCreationS1 = ({ navigation }) => {
     rentDuration: rentDuration,
     securityRequirement: securityRequirement,
     city: city,
-
-    // latitude: latitude,
-    // longitude: longitude
+    address: address,
+    location: location,
   };
 
   //console.log(JSON.stringify(adData))
@@ -388,62 +395,61 @@ const AdCreationS1 = ({ navigation }) => {
               />
               <Picker.Item label="Chitral" color="#432344" value="Chitral" />
 
-              <Picker.Item color="#432344" value="Dadu">
+              <Picker.Item label="Dadu" color="#432344" value="Dadu">
                 Dadu
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dera Ghazi Khan">
+              <Picker.Item
+                label="Dera Ghazi Khan"
+                color="#432344"
+                value="Dera Ghazi Khan"
+              >
                 Dera Ghazi Khan
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dera Ismail Khan">
+              <Picker.Item
+                label="Dera Ismail Khan"
+                color="#432344"
+                value="Dera Ismail Khan"
+              >
                 Dera Ismail Khan
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dalbandin">
+              <Picker.Item color="#432344" value="Dalbandin" label="Dalbandin">
                 Dalbandin
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dargai">
+              <Picker.Item color="#432344" value="Dargai" label="Dargai">
                 Dargai
               </Picker.Item>
-              <Picker.Item color="#432344" value="Darya Khan">
+              <Picker.Item
+                color="#432344"
+                value="Darya Khan"
+                label="Darya Khan"
+              >
                 Darya Khan
               </Picker.Item>
-              <Picker.Item color="#432344" value="Daska">
+              <Picker.Item color="#432344" value="Daska" label="Daska">
                 Daska
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dera Bugti">
+              <Picker.Item
+                color="#432344"
+                value="Dera Bugti"
+                label="Dera Bugti"
+              >
                 Dera Bugti
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dhana Sar">
+              <Picker.Item color="#432344" value="Dhana Sar" label="Dhana Sar">
                 Dhana Sar
               </Picker.Item>
-              <Picker.Item color="#432344" value="Digri">
+              <Picker.Item color="#432344" value="Digri" label="Digri">
                 Digri
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dina City|Dina">
+              <Picker.Item
+                color="#432344"
+                value="Dina City|Dina"
+                label="Dina City|Dina"
+              >
                 Dina
               </Picker.Item>
-              <Picker.Item color="#432344" value="Dinga">
+              <Picker.Item color="#432344" value="Dinga" label="Dinga">
                 Dinga
-              </Picker.Item>
-              <Picker.Item color="#432344" value="Diplo, Pakistan|Diplo">
-                Diplo
-              </Picker.Item>
-              <Picker.Item color="#432344" value="Diwana">
-                Diwana
-              </Picker.Item>
-              <Picker.Item color="#432344" value="Dokri">
-                Dokri
-              </Picker.Item>
-              <Picker.Item color="#432344" value="Drosh">
-                Drosh
-              </Picker.Item>
-              <Picker.Item color="#432344" value="Duki">
-                Duki
-              </Picker.Item>
-              <Picker.Item color="#432344" value="Dushi">
-                Dushi
-              </Picker.Item>
-              <Picker.Item color="#432344" value="Duzab">
-                Duzab
               </Picker.Item>
               <Picker.Item color="#432344" value="Faisalabad">
                 Faisalabad
@@ -1208,7 +1214,10 @@ const AdCreationS1 = ({ navigation }) => {
             />
           </Text>
         </View>
-        {isSwitchOn && <CurrentLocationMap />}
+        {isSwitchOn && <CurrentLocationMap handleLocation={handleLocation} />}
+
+        {/* <Text>Location In Parent: {location.longitude}</Text> */}
+        {/* {console.log(location.coords.longitude)} */}
       </View>
 
       <TouchableOpacity

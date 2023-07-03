@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import mainIcons from "../../assets/data/mainIcons";
 import images from "../../assets/data/images";
 import { ApiLink } from "../api/ApiLink";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const OwnerDetailScreen = ({ route, navigation }) => {
   const { userId, name, adPicturePath, userPicturePath } = route.params;
@@ -24,7 +25,7 @@ const OwnerDetailScreen = ({ route, navigation }) => {
   return (
     <ScrollView>
       <View>
-        <View className="h-72 rounded-b-[48] bg-[#432344]">
+        <View className="h-72 rounded-b-[48] bg-[#432344] mb-20">
           <View>
             {/* <Image
               source={{ uri: adPicturePath }}
@@ -54,12 +55,13 @@ const OwnerDetailScreen = ({ route, navigation }) => {
         </View>
       </View>
 
-      <View>
-        <Text></Text>
+      <View className="flex flex-row items-center ml-4">
+        <Ionicons name="person-circle" size={20}/>
+        <Text className="font-[NordecoBold] text-lg ml-2">Total Ads Posted: {resultAds.length}</Text>
       </View>
 
       <View>
-        <View className="mt-52 rounded-t-[48] bg-[#FFC03D]">
+        <View className="mt-20 rounded-t-[48] bg-[#FFC03D]">
           <Text className="text-center font-[NordecoBold] text-[#432344] text-2xl mt-8">
             Listings
           </Text>

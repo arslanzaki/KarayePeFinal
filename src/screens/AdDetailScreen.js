@@ -20,7 +20,6 @@ import { useSelector } from "react-redux";
 import Spinner from "react-native-loading-spinner-overlay";
 import moment from "moment/moment";
 import Lightbox from "react-native-lightbox";
-import ImageView from "react-native-image-viewing";
 
 const AdDetailScreen = ({ route, navigation }) => {
   const {
@@ -28,6 +27,8 @@ const AdDetailScreen = ({ route, navigation }) => {
     userId,
     name,
     location,
+    city,
+    address,
     title,
     description,
     adPicturePath,
@@ -104,7 +105,11 @@ const AdDetailScreen = ({ route, navigation }) => {
 
   return (
     <>
-      <FloatingButton phoneNumber={phoneNumber} userId={userId} />
+      <FloatingButton
+        phoneNumber={phoneNumber}
+        userId={userId}
+        location={location}
+      />
       <ScrollView>
         <SafeAreaView>
           <View>
@@ -117,14 +122,14 @@ const AdDetailScreen = ({ route, navigation }) => {
             />
           </View>
           <View>
-            {/* <Lightbox className="flex-1">
-            </Lightbox> */}
-            <Image
-              source={{ uri: adPicturePath }}
-              className="h-80 w-screen"
-              resizeMethod="resize"
-              resizeMode="cover"
-            />
+            <Lightbox className="flex-1">
+              <Image
+                source={{ uri: adPicturePath }}
+                className="h-80 w-screen"
+                resizeMethod="resize"
+                resizeMode="cover"
+              />
+            </Lightbox>
 
             <TouchableOpacity
               className="h-10 w-10 rounded-full bg-[#E7EEFB] absolute left-6 top-10 flex items-center justify-center"
@@ -144,7 +149,7 @@ const AdDetailScreen = ({ route, navigation }) => {
                 {title}
               </Text>
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => setAdToFavourite(!addToFavourite)}
               >
                 {addToFavourite ? (
@@ -168,7 +173,11 @@ const AdDetailScreen = ({ route, navigation }) => {
                     color={"red"}
                   />
                 )}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+              <View className="mt-6 mr-6 flex flex-row items-center">
+                <Ionicons name="location" size={20} color="#FFC03D"/>
+                <Text className="font-[NordecoBold] text-[#FFC03D]">{city}</Text>
+              </View>
             </View>
             <View>
               <Text className="ml-6 font-[NordecoRegular] text-gray-500">
@@ -221,6 +230,10 @@ const AdDetailScreen = ({ route, navigation }) => {
               <Text className="font-[NordecoBold] text-gray-500 text-sm ml-24">
                 per {rentDuration}
               </Text>
+            </View>
+            <View className="ml-6 mt-3">
+              <Text className="font-[NordecoBold] text-lg text-gray-500">Address: {address}</Text>
+              <Text className="font-[NordecoBold] text-lg text-gray-500">Requirement: {securityRequirement}</Text>
             </View>
             <View className="border-b-4 border-gray-500 w-32 mx-auto mt-6 rounded-full"></View>
 

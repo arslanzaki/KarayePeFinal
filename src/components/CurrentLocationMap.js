@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 
-const CurrentLocationMap = () => {
+const CurrentLocationMap = ({ handleLocation }) => {
   const [location, setLocation] = useState(null);
   useEffect(() => {
     (async () => {
@@ -21,16 +21,17 @@ const CurrentLocationMap = () => {
         timeInterval: 5,
       });
       setLocation(location);
+      handleLocation(location);
     })();
   }, []);
-  console.log(location);
+  //console.log(location);
 
   const mapRef = React.createRef();
   const goToMyLocation = async () => {
     mapRef.current.animateCamera({
       center: {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+        latitude: location?.coords?.latitude,
+        longitude: location?.coords?.longitude,
       },
       zoom: 16,
     });

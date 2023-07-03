@@ -1,11 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 
-// import authReducer from "./src/state";
-// import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-// import { Provider, useSelector } from "react-redux";
-
-// // import storage from "redux-persist/lib/storage";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./src/state/store";
@@ -48,11 +42,3 @@ export default function App() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });

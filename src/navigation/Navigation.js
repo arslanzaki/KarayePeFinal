@@ -12,7 +12,6 @@ import RegisterScreen from "./../screens/RegisterScreen";
 import AdCreationS1 from "../screens/AdCreationS1";
 
 import { useSelector } from "react-redux";
-import AdCreationS2 from "../screens/AdCreationS2";
 import CustomTabBar from "../components/CustomTabBar";
 import CustomTabBarButton from "../components/CustomTabBarButton";
 import { Image, StyleSheet } from "react-native";
@@ -24,10 +23,11 @@ import CategorySearchScreen from "../screens/CategorySearchScreen";
 import MainChatScreen from "../screens/MainChatScreen";
 import ProfileDetails from "../screens/ProfileDetails";
 import MyAdsScreen from "../screens/MyAdsScreen";
-import FavouriteScreen from "../screens/FavouriteScreen";
+import FavouriteScreen from "../screens/CitywiseScreen";
 import ModeSwitchingScreen from "../screens/ModeSwitchingScreen";
 import { useEffect } from "react";
 import AboutKP from "../screens/AboutKP";
+import CitywiseScreen from "../screens/CitywiseScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,13 +43,6 @@ function MyTabs() {
   console.log("acc", accountType);
   useEffect(() => {}, []);
   return (
-    // <Tab.Navigator>
-    //   <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-    //   <Tab.Screen name="Favourite" component={FavScreen} />
-    //   <Tab.Screen name="Create" component={CreateAdScreen} />
-    //   <Tab.Screen name="Chat" component={ChatScreen} />
-    //   <Tab.Screen name="Account" component={AccountScreen} />
-    // </Tab.Navigator>
     <Tab.Navigator
       tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={({ route }) => ({
@@ -64,8 +57,8 @@ function MyTabs() {
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home";
-          } else if (route.name === "FavouritesScreen") {
-            iconName = focused ? "heart" : "heart";
+          } else if (route.name === "CitywiseScreen") {
+            iconName = focused ? "location" : "location";
           } else if (route.name === "MyAds") {
             iconName = focused ? "library" : "library";
           } else if (route.name === "Chat") {
@@ -83,7 +76,7 @@ function MyTabs() {
       {accountType?.Seller ? (
         <Tab.Screen name="MyAds" component={MyAdsScreen} />
       ) : (
-        <Tab.Screen name="FavouritesScreen" component={FavouriteScreen} />
+        <Tab.Screen name="CitywiseScreen" component={CitywiseScreen} />
       )}
 
       {accountType?.Seller ? (
@@ -147,11 +140,6 @@ function MyStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AdCreationS2"
-        component={AdCreationS2}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="MainChatScreen"
         component={MainChatScreen}
         options={{ headerShown: false }}
@@ -194,7 +182,6 @@ function AuthScreens() {
 
 export const Navigation = () => {
   const isAuth = Boolean(useSelector((state) => state.token));
-  // console.log(isAuth);
   return (
     <NavigationContainer>
       {isAuth ? <MyStack /> : <AuthScreens />}

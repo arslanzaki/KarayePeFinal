@@ -13,7 +13,8 @@ import MapView, { Marker } from "react-native-maps";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-const FloatingButton = ({ phoneNumber, userId }) => {
+const FloatingButton = ({ phoneNumber, userId,location }) => {
+  console.log(parseFloat(location.latitude))
   const fuserid = userId;
   
   const navigation = useNavigation();
@@ -41,12 +42,12 @@ const FloatingButton = ({ phoneNumber, userId }) => {
 
   const mapRef = useRef(null);
   const [marker, setMarker] = useState({
-    latitude: 30.799115,
-    longitude: 73.43148,
+    latitude: parseFloat(location.latitude),
+    longitude: parseFloat(location.latitude),
   });
   const [region, setRegion] = useState({
-    latitude: 30.799115,
-    longitude: 73.43148,
+    latitude: parseFloat(location.latitude),
+    longitude: parseFloat(location.longitude),
     latitudeDelta: 0.005,
     longitudeDelta: 0.005,
   });
@@ -66,7 +67,7 @@ const FloatingButton = ({ phoneNumber, userId }) => {
             >
               <Marker
                 draggable
-                coordinate={{ latitude: 30.799115, longitude: 73.43148 }}
+                coordinate={{ latitude: parseFloat(location.latitude), longitude: parseFloat(location.longitude)}}
               />
             </MapView>
 
@@ -102,9 +103,9 @@ const FloatingButton = ({ phoneNumber, userId }) => {
                 })
               }
             >
-              <Image source={mainIcons.callIcon} className="h-6 w-6" />
+              <Image source={mainIcons.chatIcon} className="h-6 w-6" />
               <Text className="font-[NordecoBold] text-[#432344] text-xl">
-                Call
+                Chat
               </Text>
             </TouchableOpacity>
           </View>

@@ -97,6 +97,8 @@ const MyAdsScreen = () => {
                   userId,
                   name,
                   location,
+                  city,
+                  address,
                   title,
                   description,
                   adPicturePath,
@@ -129,6 +131,26 @@ const MyAdsScreen = () => {
                     </View>
 
                     <View className="flex flex-row items-center justify-around mt-4">
+                    <TouchableOpacity
+                        onPress={() => {
+                          setLoading(true);
+                          fetch(`${ApiLink}/ads/deleteAd`, {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+
+                            body: JSON.stringify({
+                              id: _id,
+                            }),
+                          });
+                          setLoading(false)
+                        }}
+                      >
+                        <Text className="text-center font-[NordecoBold] bg-red-500 text-white px-6 py-2 w-24 mx-auto rounded-lg">
+                          Delete
+                        </Text>
+                      </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() =>
                           navigation.navigate("AdDetails", {
@@ -136,6 +158,8 @@ const MyAdsScreen = () => {
                             userId,
                             name,
                             location,
+                            city,
+                            address,
                             title,
                             description,
                             adPicturePath,
@@ -152,33 +176,17 @@ const MyAdsScreen = () => {
                         </Text>
                       </TouchableOpacity>
 
-                      <TouchableOpacity
-                        onPress={() => {
-                          setLoading(true);
-                          fetch(`${ApiLink}/ads/deleteAd`, {
-                            method: "POST",
-                            headers: {
-                              "Content-Type": "application/json",
-                            },
+                      
 
-                            body: JSON.stringify({
-                              id: _id,
-                            }),
-                          });
-                        }}
-                      >
-                        <Text className="text-center font-[NordecoBold] bg-red-500 text-white px-6 py-2 w-24 mx-auto rounded-lg">
-                          Delete
-                        </Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                         onPress={() =>
-                          navigation.navigate("AdDetails", {
+                          navigation.navigate("Edit", {
                             _id,
                             userId,
                             name,
                             location,
+                            city,
+                            address,
                             title,
                             description,
                             adPicturePath,
@@ -193,7 +201,7 @@ const MyAdsScreen = () => {
                         <Text className="text-center font-[NordecoBold] bg-purple-500 text-white px-6 py-2 w-20 mx-auto rounded-lg">
                           Edit
                         </Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                     </View>
                   </View>
                 )
